@@ -7,6 +7,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -64,6 +65,8 @@ public class MainActivity extends Activity implements CvCameraViewListener2{
 
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
+        mOpenCvCameraView.setMaxFrameSize(320, 240);
+
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
 
@@ -105,6 +108,8 @@ public class MainActivity extends Activity implements CvCameraViewListener2{
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat newFrame = inputFrame.rgba();
+
+        Imgproc.cvtColor(newFrame, newFrame, Imgproc.COLOR_RGBA2RGB);
 
         JNILib.onNewFrame(newFrame.getNativeObjAddr());
 

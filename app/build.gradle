@@ -1,10 +1,16 @@
 apply plugin: 'com.android.application'
 
+task copyFiles(type: Exec) {
+    commandLine 'adb', 'push', 'src/main/data/.', '/storage/emulated/0/Data/'
+}
+
+preBuild.finalizedBy(copyFiles)
+
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.example.mykolabondarenko.handdetection"
+        applicationId "com.example.mykolabondarenko.handdetectionhog"
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1
